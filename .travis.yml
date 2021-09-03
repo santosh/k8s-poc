@@ -1,0 +1,26 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  # Build test version of client tests
+  - docker build -t $DOCKER_ID/complex-client:test -f ./client/Dockerfile.dev ./client
+
+script:
+  # Run tests for client
+  - docker run -e CI=true $DOCKER_ID/complex-client:test npm test
+
+after_success:
+  # Build production version of images
+  - docker build -t $DOCKER_ID/complex-client ./client
+  - docker build -t $DOCKER_ID/complex-nginx ./nginx
+  - docker build -t $DOCKER_ID/complex-server ./server
+  - docker build -t $DOCKER_ID/complex-worker ./worker
+
+  # Login to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push production version of images to Docker Hub
+  - docker push $DOCKER_ID/complex-client
+  - docker push $DOCKER_ID/complex-nginx
+  - docker push $DOCKER_ID/complex-server
+  - docker push $DOCKER_ID/complex-worker
