@@ -4,12 +4,12 @@ services:
 
 before_install:
   # Build test version of client tests
-  - docker build -t sntshk/complex-client:test -f ./client/Dockerfile.dev ./client
+  - echo This is where you should build your test images.
 
 script:
   # Run tests for client
   # - docker run -e CI=true sntshk/complex-client:test npm test
-  - echo Ok
+  - echo This is where you run test command on above build image.
 
 after_success:
   # Build production version of images
