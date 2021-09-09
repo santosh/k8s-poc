@@ -1,4 +1,5 @@
 sudo: required
+language: generic
 services:
   - docker
 
@@ -10,17 +11,14 @@ script:
   # Run tests for client
   - docker run -e CI=true $DOCKER_ID/complex-client:test npm test
 
-after_success:
-  # Build production version of images
-  - docker build -t $DOCKER_ID/complex-client ./client
-  - docker build -t $DOCKER_ID/complex-nginx ./nginx
-  - docker build -t $DOCKER_ID/complex-server ./server
-  - docker build -t $DOCKER_ID/complex-worker ./worker
-
-  # Login to the Docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Push production version of images to Docker Hub
-  - docker push $DOCKER_ID/complex-client
-  - docker push $DOCKER_ID/complex-nginx
-  - docker push $DOCKER_ID/complex-server
-  - docker push $DOCKER_ID/complex-worker
+deploy:
+  provider: elasticbeanstalk
+  region: ap-south-1
+  app: "docker-complex"
+  env: "Dockercomplex-env"
+  bucket_name: "elasticbeanstalk-ap-south-1-887635673391"
+  bucket_path: "docker-complex"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
