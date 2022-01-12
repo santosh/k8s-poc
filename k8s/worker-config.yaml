@@ -15,5 +15,8 @@ spec:
       containers:
         - name: worker
           image: stephengrider/multi-worker
-          # ports:
-          #   - containerPort: 3000
+          env:
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: 6379
