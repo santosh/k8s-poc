@@ -10,15 +10,3 @@ before_install:
 script:
   # Run tests for client
   - docker run -e CI=true $DOCKER_ID/complex-client:test npm test
-
-deploy:
-  provider: elasticbeanstalk
-  region: ap-south-1
-  app: "docker-complex"
-  env: "Dockercomplex-env"
-  bucket_name: "elasticbeanstalk-ap-south-1-887635673391"
-  bucket_path: "docker-complex"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
