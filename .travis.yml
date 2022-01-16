@@ -3,10 +3,22 @@ language: generic
 services:
   - docker
 
+before_script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
 before_install:
   # Build test version of client tests
-  - docker build -t $DOCKER_ID/complex-client:test -f ./client/Dockerfile.dev ./client
+  - docker build -t sntshk/complex-client:test -f ./client/Dockerfile.dev ./client
+  # Run tests for client
+  - docker run -e CI=true sntshk/complex-client:test npm test
 
 script:
-  # Run tests for client
-  - docker run -e CI=true $DOCKER_ID/complex-client:test npm test
+  - docker build -t sntshk/complex-client ./client
+  - docker build -t sntshk/complex-server ./server
+  - docker build -t sntshk/complex-worker ./worker
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
