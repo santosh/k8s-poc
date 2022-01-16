@@ -1,5 +1,7 @@
 # complex
 
+[![Build Status](https://app.travis-ci.com/santosh/k8s-poc.svg?branch=master)](https://app.travis-ci.com/santosh/k8s-poc)
+
 `complex`, by the name indicates that it's a microservice rather than a monolith. This repo is a proof of concept that we can do microservices (aka multi-container) deployment to beanstalk and managed Kubernetes services like EKS.
 
 We have a variety of containers running to serve this single application. These are:
