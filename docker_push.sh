@@ -10,8 +10,7 @@ do
     TARGET_IMAGE_LATEST="${TARGET_IMAGE}:latest"
 
     # using specific version as well
-    TIMESTAMP=$(date '+%Y%m%d%H%M%S')
-    TARGET_IMAGE_VERSIONED="${TARGET_IMAGE}:${TIMESTAMP}"
+    TARGET_IMAGE_VERSIONED="${TARGET_IMAGE}:$SHA"
 
     # Push image to Docker Hub
     # update latest version
