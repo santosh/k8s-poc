@@ -32,12 +32,6 @@ script:
 
 deploy:
   provider: script
-  script: bash docker_push.sh
-  on:
-    branch: master
-
-deploy:
-  provider: script
-  script: bash deploy.sh
+  script: bash docker_push_and_k8s_deploy.sh
   on:
     branch: master
