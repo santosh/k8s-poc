@@ -23,6 +23,7 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: '*.santoshk.dev'
+  commonName: santoshk.dev
   dnsNames:
+    - santoshk.dev
     - k8s-poc.santoshk.dev
